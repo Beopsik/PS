@@ -5,8 +5,6 @@ public class Main {
 
     static String[] array;
     static boolean[][] check;
-    static boolean[][] noPath;
-    static boolean[] end;
 
     static int[] dy={-1, 0, 1};
     static int[] dx={1, 1, 1};
@@ -19,8 +17,6 @@ public class Main {
 
         array=new String[r+1];
         check=new boolean[r+1][c+1];
-        noPath=new boolean[r+1][c+1];
-        end=new boolean[r+1];
 
         for(int i=0; i<r; i++)
             array[i]=sc.nextLine();
