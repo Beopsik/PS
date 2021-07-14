@@ -28,7 +28,6 @@ public class Main {
     static int[][] island;
     static int[][] bridge;
     static boolean[][] check;
-    static boolean[] cycle;
     static boolean[] visit;
     static int[] dy={1, 0, -1, 0};
     static int[] dx={0, 1, 0, -1};
@@ -52,7 +51,6 @@ public class Main {
         island=new int[11][11];
         bridge=new int[11][11];
         check=new boolean[11][11];
-        cycle=new boolean[101];
         visit=new boolean[11];
         ArrayList<Integer> list=new ArrayList<>();
 
@@ -84,6 +82,7 @@ public class Main {
                 }
             }
         }
+
         for(int i=0; i<11; i++){
             for(int j=0; j<11; j++){
                 if(bridge[i][j]!=100){
@@ -96,9 +95,9 @@ public class Main {
                 }
             }
         }
+
         int result=0;
         int sum=0;
-
         int i1=0, i2=0;
         list.add(2);
         for(int j=0; j<7; j++){
