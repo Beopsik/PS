@@ -61,9 +61,7 @@ public class Main {
         right=0;
         int result=1000001;
         while(right<height.size()){
-            while (true){
-                if(left>=height.size())
-                    break;
+            while (left<height.size()){
                 if(degree[startY][startX]<height.get(left)||degree[startY][startX]>height.get(right))
                     break;
 
