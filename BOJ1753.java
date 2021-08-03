@@ -32,7 +32,6 @@ public class Main {
     static ArrayList<Pair>[] arr;
     static PriorityQueue<Pair> queue;
     static int[] minLen;
-    static boolean[] check;
     public static void main(String[] args) {
         br = new BufferedReader(new InputStreamReader(System.in));
 
@@ -52,8 +51,6 @@ public class Main {
             }
             minLen=new int[v+1];
             Arrays.fill(minLen, Integer.MAX_VALUE);
-
-            check=new boolean[v+1];
 
             for(int i=0; i<e; i++) {
                 int tmp1, tmp2, tmp3;
@@ -84,7 +81,6 @@ public class Main {
         }
     }
     static void bfs(int start){
-        check[start]=true;
         queue=new PriorityQueue<>();
 
         queue.add(new Pair(start, 0));
@@ -95,7 +91,7 @@ public class Main {
 
             for(int i=0; i<arr[cur.getNode()].size(); i++){
                 Pair next=arr[cur.getNode()].get(i);
-                if (!check[next.getNode()]&&minLen[next.getNode()]>minLen[cur.getNode()]+next.getWeight()) {
+                if (minLen[next.getNode()]>minLen[cur.getNode()]+next.getWeight()) {
                     minLen[next.getNode()]=minLen[cur.getNode()]+next.getWeight();
                     queue.add(new Pair(next.getNode(), minLen[next.getNode()]));
                 }
