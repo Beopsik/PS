@@ -16,9 +16,9 @@ class Pair implements Comparable<Pair>{
     @Override
     public int compareTo(Pair p) {
         if(this.time==p.time)
-            return this.cost-p.cost;
+            return Long.compare(this.cost, p.cost);
         else
-            return this.time-p.time;
+            return Long.compare(this.time, p.time);
     }
 
     public int getNode() {
@@ -48,8 +48,8 @@ public class Main {
     static int tc, n, m, k;
     static ArrayList<Pair>[] arr;
     static PriorityQueue<Pair> queue;
-    static long[][] dp;
-    static long answer;
+    static int[][] minLen;
+    static long result;
 
     public static void main(String[] args) {
 
@@ -57,20 +57,21 @@ public class Main {
         try{
             st = new StringTokenizer(br.readLine());
             tc = Integer.parseInt(st.nextToken());
+
             for(int TC=0; TC<tc; TC++) {
-                answer=Long.MAX_VALUE;
+                result=Long.MAX_VALUE;
+
                 st = new StringTokenizer(br.readLine());
                 n = Integer.parseInt(st.nextToken());
                 m = Integer.parseInt(st.nextToken());
                 k = Integer.parseInt(st.nextToken());
 
-                dp=new long[n+1][m+1];
                 arr = new ArrayList[n + 1];
+                minLen = new int[n + 1][m+1];
                 for (int i = 0; i < n + 1; i++) {
-                    Arrays.fill(dp[i], Long.MAX_VALUE);
                     arr[i] = new ArrayList<>();
+                    Arrays.fill(minLen[i], Integer.MAX_VALUE);
                 }
-
 
                 for (int i = 0; i < k; i++) {
                     int tmp1, tmp2, tmpTime, tmpCost;
@@ -83,8 +84,11 @@ public class Main {
                     arr[tmp1].add(new Pair(tmp2, tmpCost, tmpTime));
                 }
 
-                dp[1][0]=0;
                 bfs();
+                if(result==Long.MAX_VALUE)
+                    System.out.println("Poor KCM");
+                else
+                    System.out.println(result);
             }
         }catch (Exception e){
             System.out.println(e);
@@ -94,33 +98,30 @@ public class Main {
     static void bfs(){
         queue=new PriorityQueue<>();
 
+        minLen[1][0]=0;
         queue.add(new Pair(1, 0, 0));
 
         while(!queue.isEmpty()) {
             Pair cur = queue.poll();
-            System.out.println(cur.toString());
-            if(cur.node==n){
-                answer=Math.min(answer, cur.getTime());
+
+            if(cur.getNode()==n){
+                result=Math.min(result, cur.getTime());
                 break;
             }
-            
+
             for(int i=0; i<arr[cur.getNode()].size(); i++){
                 Pair next=arr[cur.getNode()].get(i);
-                
+
                 int sumCost=cur.getCost()+next.getCost();
                 if(sumCost>m)
                     continue;
 
                 int sumTime=cur.getTime()+ next.getTime();
-                if(dp[next.getNode()][sumCost]>sumTime){
-                    dp[next.getNode()][sumCost]=sumTime;
+                if (minLen[next.getNode()][sumCost]>sumTime) {
+                    minLen[next.getNode()][sumCost]=sumTime;
                     queue.add(new Pair(next.getNode(), sumCost, sumTime));
                 }
             }
         }
-        if(answer==Long.MAX_VALUE)
-            System.out.println("Poor KCM");
-        else
-            System.out.println(answer);
     }
 }
