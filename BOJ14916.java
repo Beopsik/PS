@@ -34,7 +34,7 @@ public class Main {
                 for(int j=0; j<2; j++){
                     if(dp[i-coin[j]]==-1)
                         continue;
-                    dp[i]=Math.min(dp[i], dp[i-coin[j]]+dp[coin[j]]);
+                    dp[i]=Math.min(dp[i], dp[i-coin[j]]+1);
                 }
             }
             System.out.println(dp[n]);
