@@ -44,28 +44,29 @@ public class Main {
             return;
         }
 
+        int nextTime=time+1;
         int nextMove;
         int nextFruit;
 
         nextMove=move;
-        if(arr[time+1]==treeNum)
+        if(arr[nextTime]==treeNum)
             nextFruit=fruit+1;
         else
             nextFruit=fruit;
-        if(dp[time+1][move]<nextFruit) {
-            dp[time+1][move]=nextFruit;
-            dfs(treeNum, time + 1, nextMove, nextFruit);
+        if(dp[nextTime][nextMove]<nextFruit) {
+            dp[nextTime][nextMove]=nextFruit;
+            dfs(treeNum, nextTime, nextMove, nextFruit);
         }
 
         nextMove=move+1;
         if(nextMove<=w) {
-            if (arr[time + 1] != treeNum)
+            if (arr[nextTime] != treeNum)
                 nextFruit = fruit + 1;
             else
                 nextFruit = fruit;
-            if (dp[time + 1][move + 1] < nextFruit)
-                dp[time + 1][move + 1] = nextFruit;
-                dfs(changeTree[treeNum], time + 1, nextMove, nextFruit);
+            if (dp[nextTime][nextMove] < nextFruit)
+                dp[nextTime][nextMove] = nextFruit;
+                dfs(changeTree[treeNum], nextTime, nextMove, nextFruit);
         }
     }
 }
