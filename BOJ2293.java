@@ -21,7 +21,7 @@ public class Main {
             coin=new ArrayList<>();
             dp=new int[k+1][n+1];
 
-            coin.add(0);
+            coin.add(0); //dummy value for pretty index
             for(int i=1; i<=n; i++){
                 st = new StringTokenizer(br.readLine());
                 coin.add(Integer.parseInt(st.nextToken()));
@@ -34,12 +34,12 @@ public class Main {
                     dp[coin.get(i)][i] = 1;
             }
 
-            for(int i=1; i<=k; i++){
-                for(int j=1; j<=coin.size()-1; j++){
-                    int coinTemp=coin.get(j);
-                    for(int t=1; t<=j; t++) {
-                        if(i-coinTemp>=1)
-                            dp[i][j] += dp[i - coinTemp][t];
+            for(int coinSum=1; coinSum<=k; coinSum++){
+                for(int coinIdx=1; coinIdx<=coin.size()-1; coinIdx++){
+                    int coinTemp=coin.get(coinIdx);
+                    for(int i=1; i<=coinIdx; i++) {
+                        if(coinSum-coinTemp>=1)
+                            dp[coinSum][coinIdx] += dp[coinSum - coinTemp][i];
                     }
                 }
             }
