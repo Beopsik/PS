@@ -6,7 +6,6 @@ public class Main {
     static BufferedReader br;
     static StringTokenizer st;
     static int[][] dp;
-    static String[][] dpStr;
     public static void main(String[] args) {
 
         br = new BufferedReader(new InputStreamReader(System.in));
@@ -18,44 +17,54 @@ public class Main {
             String str2=st.nextToken();
 
             dp=new int[1001][1001];
-            dpStr=new String[1001][1001];
-            for(int i=0; i<=1000; i++)
-                Arrays.fill(dpStr[i], "");
+            char[] traceChar = new char[1001];
 
             int max=0;
-            String maxStr="";
+            int y=0;
+            int x=0;
             for(int i=1; i<=str1.length(); i++){
                 dp[i]=dp[i-1].clone();
-                dpStr[i]=dpStr[i-1].clone();
                 for(int j=1; j<=str2.length(); j++){
                     if(str1.charAt(i-1)==str2.charAt(j-1)){
                         dp[i][j]=dp[i-1][j-1]+1;
-                        dpStr[i][j]=dpStr[i-1][j-1].concat(Character.toString(str2.charAt(j-1)));
                         if(dp[i][j]>max) {
                             max = dp[i][j];
-                            maxStr=dpStr[i][j];
+                            y=i;
+                            x=j;
                         }
-                    }else {
-                        dp[i][j] = Math.max(dp[i][j - 1], dp[i][j]);
-                        if(dpStr[i][j].length()<dpStr[i][j-1].length())
-                            dpStr[i][j]=dpStr[i][j-1];
-                    }
+                    }else
+                        dp[i][j]=Math.max(dp[i][j-1], dp[i][j]);
                 }
             }
-
-            /*System.out.print("  ");
-            for(int j=1; j<=str2.length(); j++)
-                System.out.print(str2.charAt(j-1)+" ");
-            System.out.println();
-            for(int i=1; i<=str1.length(); i++){
-                System.out.print(str1.charAt(i-1)+" ");
-                for(int j=1; j<=str2.length(); j++)
-                    System.out.print(dp[i][j]+" ");
-                System.out.println();
-            }*/
-
             System.out.println(max);
-            System.out.println(maxStr);
+            if(max!=0){
+                int traceValue=max;
+                while (true){
+                    if(dp[y][x]==traceValue){
+                        traceChar[traceValue]=str1.charAt(y-1);
+                        traceValue-=1;
+                        y-=1;
+                        x-=1;
+                    }
+                    if(traceValue==0)
+                        break;
+
+                    while(dp[y][x-1]==dp[y][x]){
+                        if(x<=1)
+                            break;
+                        x--;
+                    }
+
+                    while(dp[y-1][x]==dp[y][x]){
+                        if(y<=1)
+                            break;
+                        y--;
+                    }
+                }
+                for(int i=1; i<=max; i++)
+                    System.out.print(traceChar[i]);
+                System.out.println();
+            }
         }catch (Exception e){
             System.out.println(e);
             System.exit(0);
