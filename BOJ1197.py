@@ -16,7 +16,7 @@ while True:
     # print("Root:",checkRoot)
     # print("Belongs:",belongSet)
     # print()
-    if i==e or len(mstSet)==e:
+    if i==e or len(mstSet)+1==v:
         break
 
     c, v1, v2=map(int, graph[i])
