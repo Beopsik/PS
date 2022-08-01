@@ -17,7 +17,7 @@ while True:
     # print("Root:",checkRoot)
     # print("Belongs:",belongSet)
     # print()
-    if i==e or len(mstSet)==e:
+    if i==e or len(mstSet)+1==v:
         cost-=finalCost
         break
 
