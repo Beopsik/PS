@@ -1,3 +1,5 @@
+package com.company;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.*;
@@ -28,7 +30,7 @@ public class Main {
     static BufferedReader br;
     static StringTokenizer st;
     static int tc, n, d, c;
-    static ArrayList<Pair>[] arr;
+    static ArrayList<ArrayList<Pair>> arr;
     static PriorityQueue<Pair> queue;
     static long[] minSec;
     public static void main(String[] args) {
@@ -45,9 +47,9 @@ public class Main {
                 d = Integer.parseInt(st.nextToken());
                 c = Integer.parseInt(st.nextToken());
 
-                arr = new ArrayList[n + 1];
-                for (int i = 1; i < n + 1; i++) {
-                    arr[i] = new ArrayList<>();
+                arr = new ArrayList<>();
+                for (int i = 0; i < n + 1; i++) {
+                    arr.add(new ArrayList<>());
                 }
                 minSec = new long[n + 1];
                 Arrays.fill(minSec, Long.MAX_VALUE);
@@ -58,7 +60,7 @@ public class Main {
                     a = Integer.parseInt(st.nextToken());
                     b = Integer.parseInt(st.nextToken());
                     s = Integer.parseInt(st.nextToken());
-                    arr[b].add(new Pair(a, s));
+                    arr.get(b).add(new Pair(a, s));
                 }
 
                 bfs(c);
@@ -89,8 +91,8 @@ public class Main {
         while(!queue.isEmpty()) {
             Pair cur = queue.poll();
 
-            for(int i=0; i<arr[cur.getNode()].size(); i++){
-                Pair next=arr[cur.getNode()].get(i);
+            for(int i=0; i<arr.get(cur.getNode()).size(); i++){
+                Pair next=arr.get(cur.getNode()).get(i);
                 if (minSec[next.getNode()]>minSec[cur.getNode()]+next.getsecond()) {
                     minSec[next.getNode()]=minSec[cur.getNode()]+next.getsecond();
                     queue.add(new Pair(next.getNode(), minSec[next.getNode()]));
